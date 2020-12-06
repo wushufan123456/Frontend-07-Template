@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五子棋游戏</title>
+    <style>
+        .cell {
+            height: 100px;
+            width: 100px;
+            background-color: #fad65b;
+            line-height: 100px;
+            display:inline-block;
+            border:1px solid black;
+            text-align: center;
+            vertical-align: middle;
+            font-size:50px;
+
+        }
+        #board {
+            width: 990px;
+            height: 990px;
+            margin:10px auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="board"></div>
+    <script>
+        let pattern=[
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ]
+        let color=2;
+        function show(){
+            let show=document.getElementById("board");
+            board.innerHTML="";
+            for(let i=0;i<9;i++){
+                for(let j=0;j<9;j++){
+                    let cell=document.createElement("div");
+                    cell.classList.add("cell");
+                    cell.innerText=pattern[i][j]==2? "⚫":
+                    pattern[i][j]==1? "⚪":"";
+                    board.appendChild(cell);
+                    cell.addEventListener("click", ()=> move(i,j));
+                }
+            }
+        }
+        function move(x,y) {
+            pattern[x][y]=color;
+            if(check()){
+                alert(color==2?"⚫is winner" : "⚪ is winner");
+            }
+            color=3-color;
+            show();
+        }
+        function check() {
+           for (let i=0;i<9;i++){
+              let win=false;
+              for(let j=0;j<5;j++){
+               if(pattern[i][j]==pattern[i][j+1]&&pattern[i][j+1]==pattern[i][j+2]&&pattern[i][j+2]==pattern[i][j+3]&&pattern[i][j+3]==pattern[i][j+4]
+               &&pattern[i][j+4]==color){
+                win=true;
+               }
+           }
+           if(win)
+           return true;
+           }
+           
+           for (let i=0;i<5;i++){
+              let win=false;
+              for(let j=0;j<9;j++){
+               if(pattern[i][j]==pattern[i+1][j]&&pattern[i+1][j]==pattern[i+2][j]&&pattern[i+2][j]==pattern[i+3][j]&&pattern[i+3][j]==pattern[i+4][j]
+               &&pattern[i+4][j]==color){
+                win=true;
+               }
+           }
+           if(win)
+           return true;
+           }
+        for (let i=0;i<5;i++){
+              let win=false;
+              for(let j=0;j<5;j++){
+               if(pattern[i][j]==pattern[i+1][j+1]&&pattern[i+1][j+1]==pattern[i+2][j+2]&&pattern[i+2][j+2]==pattern[i+3][j+3]&&pattern[i+3][j+3]==pattern[i+4][j+4]
+               &&pattern[i+4][j+4]==color){
+                win=true;
+               }
+           }
+           if(win)
+           return true;
+           }
+           for (let i=8;i>3;i--){
+              let win=false;
+              for(let j=0;j<5;j++){
+               if(pattern[i][j]==pattern[i-1][j+1]&&pattern[i-1][j+1]==pattern[i-2][j+2]&&pattern[i-2][j+2]==pattern[i-3][j+3]&&pattern[i-3][j+3]==pattern[i-4][j+4]
+               &&pattern[i-4][j+4]==color){
+                win=true;
+               }
+           }
+           if(win)
+           return true;
+           }
+           return false;
+           }
+
+        show(pattern);
+    </script>
+</body>
+</html>
